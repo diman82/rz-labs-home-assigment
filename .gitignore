@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 /HDP_3.0.1_docker-deploy-scripts_18120587fc7fb/
 /result.csv/
+dataset.csv
+metadata.csv
