@@ -127,3 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/HDP_3.0.1_docker-deploy-scripts_18120587fc7fb/
+/result.csv/
