@@ -131,3 +131,5 @@ dmypy.json
 /result.csv/
 dataset.csv
 metadata.csv
+/data-loading-and-structuring-service/app/dataset.csv
+/data-loading-and-structuring-service/app/metadata.csv

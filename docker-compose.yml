@@ -1,0 +1,38 @@
+version: '3'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  data-loading-and-structuring-service:
+    build:
+      context: ./data-loading-and-structuring-service
+      dockerfile: Dockerfile
+    command: [ "python", "main.py"]
+    environment:
+      - PYSPARK_PYTHON=/usr/local/lib/python3.8/site-packages/pyspark/python
+      - SPARK_HOME=/usr/local/lib/python3.8/site-packages/pyspark/
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./mnt:/app/mnt
+    networks:
+      - app-tier
+  data-publication-service:
+    build:
+      context: ./data-publication-service
+      dockerfile: Dockerfile
+    command: [ "python", "main.py" ]
+    environment:
+      - PYSPARK_PYTHON=/usr/local/lib/python3.8/site-packages/pyspark/python
+      - SPARK_HOME=/usr/local/lib/python3.8/site-packages/pyspark/
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./mnt:/app/mnt
+    depends_on:
+      data-loading-and-structuring-service:
+        condition: service_completed_successfully
+    networks:
+      - app-tier

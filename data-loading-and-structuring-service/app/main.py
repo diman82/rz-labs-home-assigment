@@ -24,7 +24,6 @@ def shakespeare_word_count():
 
 def data_loading_and_structuring():
     findspark.init()
-    findspark.find()
 
     spark = SparkSession \
         .builder \
@@ -71,11 +70,12 @@ def data_loading_and_structuring():
 
     inner_join_df.coalesce(1).write.mode('overwrite') \
         .option('header', 'true') \
-        .parquet("result.parquet")
+        .parquet("./mnt/result.parquet")
 
-    # inner_join_df.write.mode('overwrite') \
-    #     .option('header', 'true') \
-    #     .parquet("result.parquet")  # write supporting HDFS
+    # inner_join_df.coalesce(1).write.mode('overwrite')\
+    #     .format('com.databricks.spark.csv')\
+    #     .option('header', 'true')\
+    #     .csv('/tmp/result.csv')  # usually would like to write dataframe to HDFS. but here I write to /tmp which is mapped to ram
 
 
 if __name__ == "__main__":
